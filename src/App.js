@@ -56,36 +56,46 @@ export default function App() {
   const [watched, setWatched] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
-  const query = 'notebook';
+  const [query, setQuery] = useState('');
 
-  useEffect(function () {
-    async function fetchMovies() {
-      try {
-        setIsLoading(true);
-        const res = await fetch(
-          `http://www.omdbapi.com/?apikey=${apiKey}&s=${query}`
-        );
+  useEffect(
+    function () {
+      async function fetchMovies() {
+        try {
+          setIsLoading(true);
+          setError('');
+          const res = await fetch(
+            `http://www.omdbapi.com/?apikey=${apiKey}&s=${query}`
+          );
 
-        if (!res.ok)
-          throw new Error('Something went wrong with fetching movies');
+          if (!res.ok)
+            throw new Error('Something went wrong with fetching movies');
 
-        const data = await res.json();
-        if (data.Response === 'False') throw new Error('Movie not found');
-        setMovies(data.Search);
-      } catch (err) {
-        console.error(err);
-        setError(err.message);
-      } finally {
-        setIsLoading(false);
+          const data = await res.json();
+          if (data.Response === 'False') throw new Error('Movie not found');
+          setMovies(data.Search);
+        } catch (err) {
+          console.error(err);
+          setError(err.message);
+        } finally {
+          setIsLoading(false);
+        }
       }
-    }
-    fetchMovies();
-  }, []);
+      if (query.length < 3) {
+        setMovies([]);
+        setError('');
+        return;
+      }
+
+      fetchMovies();
+    },
+    [query]
+  );
 
   return (
     <>
       <NavBar>
-        <Search />
+        <Search query={query} setQuery={setQuery} />
         <NumResults movies={movies} />
       </NavBar>
 
@@ -133,8 +143,7 @@ function Logo() {
   );
 }
 
-function Search() {
-  const [query, setQuery] = useState('');
+function Search({ query, setQuery }) {
   return (
     <input
       className="search"

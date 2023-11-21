@@ -280,6 +280,8 @@ function MovieDetails({ selectedId, onCloseMovie }) {
     <div className="details">
       {error ? (
         <ErrorMessage message={error} />
+      ) : isLoading ? (
+        <Loader />
       ) : (
         <>
           <header>
@@ -295,7 +297,7 @@ function MovieDetails({ selectedId, onCloseMovie }) {
               <p>{genre}</p>
               <p>
                 <span>⭐</span>
-                {imdbRating} IMBb rating
+                {imdbRating} IMDb rating
               </p>
             </div>
           </header>

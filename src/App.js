@@ -295,6 +295,14 @@ function MovieDetails({ selectedId, onCloseMovie, onAddWatched, watched }) {
     [selectedId]
   );
 
+  useEffect(
+    function () {
+      if (!title) return;
+      document.title = `PopcornPicks | ${title}`;
+    },
+    [title]
+  );
+
   function handleAdd() {
     const newWatchedMovie = {
       imdbID: selectedId,

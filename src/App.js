@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import StarRating from './StarRating';
 
 const apiKey = process.env.REACT_APP_KEY_API;
@@ -154,11 +154,16 @@ function Logo() {
 }
 
 function Search({ query, setQuery }) {
-  // How NOT to select DOM elements in React
+  const inputEl = useRef(null);
+
   useEffect(function () {
-    const el = document.querySelector('.search');
-    el.focus();
+    inputEl.current.focus();
   }, []);
+  // How NOT to select DOM elements in React
+  // useEffect(function () {
+  //   const el = document.querySelector('.search');
+  //   el.focus();
+  // }, []);
 
   return (
     <input
@@ -167,6 +172,7 @@ function Search({ query, setQuery }) {
       placeholder="Search movies..."
       value={query}
       onChange={(e) => setQuery(e.target.value)}
+      ref={inputEl}
     />
   );
 }

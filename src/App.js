@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import StarRating from './StarRating';
 import { useMovies } from './useMovies';
 import { useLocalStorageState } from './useLocalStorageState';
+import { useKey } from './useKey';
 
 const apiKey = process.env.REACT_APP_KEY_API;
 
@@ -258,25 +259,7 @@ function MovieDetails({ selectedId, onCloseMovie, onAddWatched, watched }) {
     [title]
   );
 
-  useEffect(
-    function () {
-      function callback(e) {
-        if (e.code === 'Escape') {
-          onCloseMovie();
-          console.log('closed');
-        }
-      }
-
-      document.addEventListener('keydown', callback);
-
-      // remove the old event listener
-      // each time that the component unmounts or it re-renders
-      return function () {
-        document.removeEventListener('keydown', callback);
-      };
-    },
-    [onCloseMovie]
-  );
+  useKey('Escape', onCloseMovie);
 
   useEffect(
     function () {

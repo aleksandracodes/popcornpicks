@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import StarRating from './StarRating';
+import StarRating from './utils/StarRating';
+import { NumResults } from './utils/NumResults';
 import { useMovies } from './useMovies';
-import { useLocalStorageState } from './useLocalStorageState';
-import { useKey } from './useKey';
+import { useLocalStorageState } from './hooks/useLocalStorageState';
+import { useKey } from './hooks/useKey';
 
 const apiKey = process.env.REACT_APP_KEY_API;
 
@@ -121,14 +122,6 @@ function Search({ query, setQuery }) {
       onChange={(e) => setQuery(e.target.value)}
       ref={inputEl}
     />
-  );
-}
-
-function NumResults({ movies }) {
-  return (
-    <p className="num-results">
-      Found <strong>{movies.length}</strong> results
-    </p>
   );
 }
 

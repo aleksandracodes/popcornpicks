@@ -1,6 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import StarRating from './utils/StarRating';
 import { NumResults } from './utils/NumResults';
+import { Loader } from './utils/Loader';
+import { NavBar } from './components/NavBar';
+import { Search } from './components/Search';
 import { useMovies } from './useMovies';
 import { useLocalStorageState } from './hooks/useLocalStorageState';
 import { useKey } from './hooks/useKey';
@@ -76,53 +79,11 @@ export default function App() {
   );
 }
 
-function Loader() {
-  return <p className="loader">Loading...</p>;
-}
-
 function ErrorMessage({ message }) {
   return (
     <p className="error">
       <span>❌</span> {message}
     </p>
-  );
-}
-function NavBar({ children }) {
-  return (
-    <nav className="nav-bar">
-      <Logo />
-      {children}
-    </nav>
-  );
-}
-
-function Logo() {
-  return (
-    <div className="logo">
-      <span role="img">🍿</span>
-      <h1>PopcornPicks</h1>
-    </div>
-  );
-}
-
-function Search({ query, setQuery }) {
-  const inputEl = useRef(null);
-
-  useKey('Enter', function () {
-    if (document.activeElement === inputEl.current) return;
-    inputEl.current.focus();
-    setQuery('');
-  });
-
-  return (
-    <input
-      className="search"
-      type="text"
-      placeholder="Search movies..."
-      value={query}
-      onChange={(e) => setQuery(e.target.value)}
-      ref={inputEl}
-    />
   );
 }
 

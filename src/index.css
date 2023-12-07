@@ -294,6 +294,20 @@ body {
   line-height: 1.1;
 }
 
+.genre-list {
+  display: flex;
+  justify-content: left;
+  list-style-type: none;
+  gap: 0.6rem;
+}
+
+.genre-list li {
+  background-color: var(--color-background-900);
+  padding: 0.25em 0.5em;
+  border-radius: 5px;
+  font-size: 1.5rem;
+}
+
 .details-overview p {
   display: flex;
   align-items: center;

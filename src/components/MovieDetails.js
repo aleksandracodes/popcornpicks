@@ -30,12 +30,19 @@ export function MovieDetails({
     Poster: poster,
     Runtime: runtime,
     imdbRating,
+    imdbVotes,
     Plot: plot,
     Released: released,
     Actors: actors,
     Director: director,
     Genre: genre,
   } = movie;
+
+  const genreList =
+    genre &&
+    genre
+      .split(',')
+      .map((genreItem, _) => <li key={genre.id}>{genreItem.trim()}</li>);
 
   useEffect(
     function () {
@@ -50,6 +57,7 @@ export function MovieDetails({
             throw new Error('Something went wrong with fetching movie details');
 
           const data = await res.json();
+          console.log('data:', data);
           if (data.Response === 'False')
             throw new Error('Movie details not found');
 
@@ -103,7 +111,7 @@ export function MovieDetails({
   }
 
   return (
-    <div className="details">
+    <div className="details fade-in">
       {error ? (
         <ErrorMessage message={error} />
       ) : isLoading ? (
@@ -120,10 +128,10 @@ export function MovieDetails({
               <p>
                 {released} &bull; {runtime}
               </p>
-              <p>{genre}</p>
+              <ul className="genre-list">{genreList}</ul>
               <p>
                 <span>⭐</span>
-                {imdbRating} IMDb rating
+                {imdbRating} IMDb rating ({imdbVotes} votes)
               </p>
             </div>
           </header>
@@ -151,9 +159,7 @@ export function MovieDetails({
               )}
             </div>
 
-            <p>
-              <em>{plot}</em>
-            </p>
+            <p>{plot}</p>
             <p>Starring {actors}</p>
             <p>Directed by {director}</p>
           </section>

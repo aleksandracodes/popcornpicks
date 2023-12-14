@@ -11,6 +11,7 @@ import { MovieList } from './components/MovieList';
 import { MovieDetails } from './components/MovieDetails';
 import { WatchedSummary } from './components/WatchedSummary';
 import { WatchedMovieList } from './components/WatchedMovieList';
+import { Message } from './utils/Message';
 
 export const apiKey = process.env.REACT_APP_KEY_API;
 
@@ -57,6 +58,12 @@ export default function App() {
 
       <Main>
         <Box>
+          {!movies.length && !error && !isLoading && (
+            <Message>
+              Find a movie by typing its title in the search box above🎬
+            </Message>
+          )}
+
           {isLoading && <Loader />}
           {!isLoading && !error && (
             <MovieList movies={movies} onSelectMovie={handleSelectMovie} />
@@ -74,10 +81,17 @@ export default function App() {
           ) : (
             <>
               <WatchedSummary watched={watched} />
-              <WatchedMovieList
-                watched={watched}
-                onDeleteWatched={handleDeleteWatched}
-              />
+
+              {!watched.length ? (
+                <Message>
+                  You haven't watched any movies yet. Start watching...🍿
+                </Message>
+              ) : (
+                <WatchedMovieList
+                  watched={watched}
+                  onDeleteWatched={handleDeleteWatched}
+                />
+              )}
             </>
           )}
         </Box>

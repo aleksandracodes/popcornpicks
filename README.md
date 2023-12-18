@@ -2,6 +2,8 @@
 
 **Developer: Aleksandra Haniok**
 
+💻 [Visit live website](https://popcornpicks.netlify.app/)
+
 ![Mockup](popcornpicks-mockup-image.png)
 ![Mocku2p](popcornpicks-mockup-image2.png)
 
